@@ -1,8 +1,11 @@
-export { auth as middleware } from "@/auth";
+import NextAuth from "next-auth";
+import { authConfig } from "./auth.config";
+
+// Use the lightweight edge-safe config — no Prisma, stays well under 1MB limit.
+export const { auth: middleware } = NextAuth(authConfig);
 
 export const config = {
   matcher: [
-    // Authenticated app routes
     "/dashboard/:path*",
     "/editor/:path*",
     "/editor",
@@ -10,7 +13,6 @@ export const config = {
     "/reports",
     "/settings/:path*",
     "/settings",
-    // Login page (redirect to dashboard if already signed in)
     "/login",
   ],
 };
